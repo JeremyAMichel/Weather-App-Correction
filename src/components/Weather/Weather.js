@@ -1,15 +1,15 @@
 import img from '../../assets/img/sun.svg';
 import './Weather.css';
 
-function Weather() {
+function Weather({ city, tempC, wind, windDegree }) {
   return (
     <>
-      <span className="card-title">Lyon</span>
+      <span className="card-title">{city}</span>
       <p>
         <img src={img} />
       </p>
-      <span className="temperature">15°</span>
-      <div className="wind">Vent 1km/h (360°)</div>
+      <span className="temperature">{tempC}°</span>
+      <div className="wind">Vent {wind}km/h ({windDegree}°)</div>
     </>
   );
 }

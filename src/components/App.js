@@ -8,6 +8,7 @@ import axios from "axios";
 function App() {
   const [weatherData, setWeatherData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [city, setCity] = useState("Lyon");
 
   const apiUrl = process.env.REACT_APP_WEATHER_API_URL;
   const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
@@ -19,10 +20,9 @@ function App() {
         // en cas de réussite de la requête
         // console.log(response);
         // setWeatherData(response.data);
-        if(!isDataLoaded){
+        if (!isDataLoaded) {
           setWeatherData(response.data);
           setIsDataLoaded(true);
-          console.log(weatherData);
         }
         console.log(weatherData);
       })
@@ -45,12 +45,23 @@ function App() {
       <div className="row">
         <div className="col s12 m6 push-m3">
           <div className="weather card blue-grey darken-1">
-            <div className="card-content white-text">
-              <Weather />
-            </div>
-            <div className="card-action">
-              <Days handleClickDay={handleClickDay} />
-            </div>
+            {isDataLoaded ? (
+              <>
+                <div className="card-content white-text">
+                  <Weather
+                    city={city}
+                    tempC={weatherData.forecast.forecastday[0].day.avgtemp_c}
+                    wind={weatherData.forecast.forecastday[0].day.avgvis_km}
+                    windDegree={weatherData.forecast.forecastday[0].hour[0].wind_degree}
+                  />
+                </div>
+                <div className="card-action">
+                  <Days handleClickDay={handleClickDay} />
+                </div>
+              </>
+            ) : (
+              <p>... LOADING</p>
+            )}
           </div>
         </div>
       </div>
